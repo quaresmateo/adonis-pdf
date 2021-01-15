@@ -4,6 +4,17 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const pdf = require("html-pdf");
+const ejs = require("ejs");
+
+// exemple
+const data = [
+  { team: "Brazi", titles: 5 },
+  { team: "Germany", titles: 4 },
+  { team: "Italy", titles: 4 },
+  { team: "Uruguay", titles: 2 },
+];
+
 /**
  * Resourceful controller for interacting with pdfs
  */
@@ -49,7 +60,23 @@ class PdfController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params, request, response, view }) {
+    ejs.renderFile("./resources/views/pdf-model.ejs", data, (err, html) => {
+      if (err) {
+        console.log("Error");
+      } else {
+        pdf
+          .create(html, {})
+          .toFile("./resources/files/generate.pdf", (err, res) => {
+            if (err) {
+              console.log("Error");
+            } else {
+              return res.filename;
+            }
+          });
+      }
+    });
+  }
 
   /**
    * Render a form to update an existing pdf.
