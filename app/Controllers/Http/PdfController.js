@@ -4,9 +4,6 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const PDFDocument = require("pdfkit");
-const doc = new PDFDocument();
-
 /**
  * Resourceful controller for interacting with pdfs
  */
@@ -52,16 +49,7 @@ class PdfController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {
-    doc.pipe(fs.createWriteStream("./resources/files/file.pdf")); // write to PDF
-    doc.pipe(res); // HTTP response
-    // add stuff to PDF here using methods described below...
-
-    // finalize the PDF and end the stream
-    doc.end();
-
-    return response.json("PDF gerado");
-  }
+  async show({ params, request, response, view }) {}
 
   /**
    * Render a form to update an existing pdf.
