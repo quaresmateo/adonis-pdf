@@ -3,7 +3,7 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
-
+const Helpers = use("Helpers");
 const pdf = require("html-pdf");
 const ejs = require("ejs");
 
@@ -71,11 +71,14 @@ class PdfController {
             if (err) {
               console.log("Error");
             } else {
-              return res.filename;
+              console.log(res.filename);
             }
           });
       }
     });
+    // force download
+    // return response.attachment(Helpers.resourcesPath("files/generate.pdf"));
+    return response.download(Helpers.resourcesPath("files/generate.pdf"));
   }
 
   /**
