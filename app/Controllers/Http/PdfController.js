@@ -15,6 +15,37 @@ const data = [
   { team: "Uruguay", titles: 2 },
 ];
 
+const config = {
+  // Papersize Options: http://phantomjs.org/api/webpage/property/paper-size.html
+  format: "a4", // allowed units: A3, A4, A5, Legal, Letter, Tabloid
+  orientation: "portrait", // portrait or landscape
+
+  // Page options
+  border: "20px", // default is 0, units: mm, cm, in, px
+  // - or -
+  border: {
+    top: "20px", // default is 0, units: mm, cm, in, px
+    right: "20px",
+    bottom: "20px",
+    left: "20px",
+  },
+
+  paginationOffset: 1, // Override the initial pagination number
+  header: {
+    height: "45mm",
+    contents: '<div style="text-align: center;">Author: Marc Bachmann</div>',
+  },
+  footer: {
+    height: "28mm",
+  },
+
+  // Zooming option, can be used to scale images if `options.type` is not pdf
+  zoomFactor: "1", // default is 1
+
+  // File options
+  type: "pdf", // allowed file types: png, jpeg, pdf
+};
+
 /**
  * Resourceful controller for interacting with pdfs
  */
@@ -66,10 +97,10 @@ class PdfController {
         console.log("Error");
       } else {
         pdf
-          .create(html, {})
+          .create(html, config)
           .toFile("./resources/files/generate.pdf", (err, res) => {
             if (err) {
-              console.log("Error");
+              console.log("Error", err);
             } else {
               console.log(res.filename);
             }
