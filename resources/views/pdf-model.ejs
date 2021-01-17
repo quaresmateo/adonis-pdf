@@ -12,34 +12,24 @@
     <title>Relatório</title>
   </head>
   <body>
-    <h1>Olaaa</h1>
+    <h1>Títulos de Copa do Mundo</h1>
+    <p>Lista das seleções que tem mais títulos na hitória da copa do mundo.</p>
     <table class="table">
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
+          <th scope="col">Times</th>
+          <th scope="col">Títulos</th>
         </tr>
       </thead>
       <tbody>
+        <% data.forEach((item, index)=>{ %>
         <tr>
-          <th scope="row">1</th>
-          <td>Markkkkkkk</td>
-          <td>Otto</td>
-          <td>@mdo</td>
+          <th scope="row"><%= index + 1 %></th>
+          <td><%= item.team %></td>
+          <td><%= item.titles %></td>
         </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td colspan="2">Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
+        <% }); %>
       </tbody>
     </table>
   </body>

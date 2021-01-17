@@ -7,43 +7,32 @@ const Helpers = use("Helpers");
 const pdf = require("html-pdf");
 const ejs = require("ejs");
 
-// exemple
-const data = [
-  { team: "Brazi", titles: 5 },
-  { team: "Germany", titles: 4 },
-  { team: "Italy", titles: 4 },
-  { team: "Uruguay", titles: 2 },
-];
-
 const config = {
   // Papersize Options: http://phantomjs.org/api/webpage/property/paper-size.html
   format: "a4", // allowed units: A3, A4, A5, Legal, Letter, Tabloid
   orientation: "portrait", // portrait or landscape
 
   // Page options
-  border: "20px", // default is 0, units: mm, cm, in, px
+  border: "0", // default is 0, units: mm, cm, in, px
   // - or -
   border: {
-    top: "20px", // default is 0, units: mm, cm, in, px
-    right: "20px",
-    bottom: "20px",
-    left: "20px",
+    top: "10mm", // default is 0, units: mm, cm, in, px
+    right: "20mm",
+    bottom: "20mm",
+    left: "20mm",
   },
 
   paginationOffset: 1, // Override the initial pagination number
   header: {
-    height: "45mm",
-    contents: '<div style="text-align: center;">Author: Marc Bachmann</div>',
+    height: "20mm",
+    contents: "",
   },
   footer: {
     height: "28mm",
   },
 
-  // Zooming option, can be used to scale images if `options.type` is not pdf
-  zoomFactor: "1", // default is 1
-
   // File options
-  type: "pdf", // allowed file types: png, jpeg, pdf
+  type: "pdf",
 };
 
 /**
@@ -92,9 +81,17 @@ class PdfController {
    * @param {View} ctx.view
    */
   async show({ params, request, response, view }) {
-    ejs.renderFile("./resources/views/pdf-model.ejs", data, (err, html) => {
+    // exemple
+    const data = [
+      { team: "Brazil", titles: 5 },
+      { team: "Germany", titles: 4 },
+      { team: "Italy", titles: 4 },
+      { team: "Uruguay", titles: 2 },
+    ];
+
+    ejs.renderFile("./resources/views/pdf-model.ejs", { data }, (err, html) => {
       if (err) {
-        console.log("Error");
+        console.log("Error", err);
       } else {
         pdf
           .create(html, config)
