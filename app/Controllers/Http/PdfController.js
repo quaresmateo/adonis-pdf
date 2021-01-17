@@ -10,36 +10,6 @@ const puppeteer = require("puppeteer");
 const logo =
   "https://i.pinimg.com/originals/b9/8a/ec/b98aecd652d202842fb3e5e48d4eecd1.jpg";
 
-const config = {
-  // Papersize Options: http://phantomjs.org/api/webpage/property/paper-size.html
-  format: "a4", // allowed units: A3, A4, A5, Legal, Letter, Tabloid
-  orientation: "portrait", // portrait or landscape
-
-  // Page options
-  border: {
-    top: "10mm", // default is 0, units: mm, cm, in, px
-    right: "20mm",
-    bottom: "20mm",
-    left: "20mm",
-  },
-
-  paginationOffset: 1, // Override the initial pagination number
-  header: {
-    height: "20mm",
-    contents: `
-    <img style="height:30px; float: right;" src="${logo}" alt="fifa logo">
-    `,
-  },
-  footer: {
-    height: "28mm",
-    contents: ``,
-    default: '<span style="color: #444;">{{page}}</span>',
-  },
-
-  // File options
-  type: "pdf",
-};
-
 /**
  * Resourceful controller for interacting with pdfs
  */
