@@ -7,6 +7,9 @@ const Helpers = use("Helpers");
 const pdf = require("html-pdf");
 const ejs = require("ejs");
 
+const logo =
+  "https://i.pinimg.com/originals/b9/8a/ec/b98aecd652d202842fb3e5e48d4eecd1.jpg";
+
 const config = {
   // Papersize Options: http://phantomjs.org/api/webpage/property/paper-size.html
   format: "a4", // allowed units: A3, A4, A5, Legal, Letter, Tabloid
@@ -24,12 +27,13 @@ const config = {
   header: {
     height: "20mm",
     contents: `
-    <img style="height:30px; float: right;" src="https://i.pinimg.com/originals/b9/8a/ec/b98aecd652d202842fb3e5e48d4eecd1.jpg" alt="fifa logo">
+    <img style="height:30px; float: right;" src="${logo}" alt="fifa logo">
     `,
   },
   footer: {
     height: "28mm",
     contents: ``,
+    default: '<span style="color: #444;">{{page}}</span>',
   },
 
   // File options
