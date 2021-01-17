@@ -10,6 +10,8 @@ const puppeteer = require("puppeteer");
 const logo =
   "https://i.pinimg.com/originals/b9/8a/ec/b98aecd652d202842fb3e5e48d4eecd1.jpg";
 
+const style = ``;
+
 /**
  * Resourceful controller for interacting with pdfs
  */
@@ -61,6 +63,7 @@ class PdfController {
       { team: "Brazil", titles: 5 },
       { team: "Germany", titles: 4 },
       { team: "Italy", titles: 4 },
+      { team: "France", titles: 2 },
       { team: "Uruguay", titles: 2 },
     ];
     ejs.renderFile(
@@ -73,6 +76,7 @@ class PdfController {
           const browser = await puppeteer.launch();
           const page = await browser.newPage();
           await page.setContent(html);
+          page.addStyleTag({ content: style });
           await page.pdf({
             path: "./resources/files/sample.pdf",
             format: "A4",
