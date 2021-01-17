@@ -58,6 +58,7 @@ class PdfController {
    * @param {View} ctx.view
    */
   async show({ params, request, response, view }) {
+    let htmlFile = "";
     // exemple
     const data = [
       { team: "Brazil", titles: 5 },
@@ -66,27 +67,31 @@ class PdfController {
       { team: "France", titles: 2 },
       { team: "Uruguay", titles: 2 },
     ];
-    ejs.renderFile(
+
+    await ejs.renderFile(
       "./resources/views/pdf-model.ejs",
       { data },
       async (err, html) => {
         if (err) {
           console.log("Error", err);
         } else {
-          const browser = await puppeteer.launch();
-          const page = await browser.newPage();
-          await page.setContent(html);
-          page.addStyleTag({ content: style });
-          await page.pdf({
-            path: "./resources/files/sample.pdf",
-            format: "A4",
-          });
-          await browser.close();
+          htmlFile = html;
         }
       }
     );
+
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.setContent(htmlFile);
+    page.addStyleTag({ content: style });
+    await page.pdf({
+      path: "./resources/files/sample.pdf",
+      format: "A4",
+    });
+    await browser.close();
+
     // Adonis: force download
-    // return response.attachment(Helpers.resourcesPath("files/generate.pdf"));
+    // return response.attachment(Helpers.resourcesPath("files/sample.pdf""));
     // Adonis: browser download page
     return response.download(Helpers.resourcesPath("files/sample.pdf"));
   }
