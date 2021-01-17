@@ -13,8 +13,6 @@ const config = {
   orientation: "portrait", // portrait or landscape
 
   // Page options
-  border: "0", // default is 0, units: mm, cm, in, px
-  // - or -
   border: {
     top: "10mm", // default is 0, units: mm, cm, in, px
     right: "20mm",
@@ -25,10 +23,13 @@ const config = {
   paginationOffset: 1, // Override the initial pagination number
   header: {
     height: "20mm",
-    contents: "",
+    contents: `
+    <img style="height:30px; float: right;" src="https://i.pinimg.com/originals/b9/8a/ec/b98aecd652d202842fb3e5e48d4eecd1.jpg" alt="fifa logo">
+    `,
   },
   footer: {
     height: "28mm",
+    contents: ``,
   },
 
   // File options
