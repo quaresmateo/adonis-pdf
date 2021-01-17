@@ -4,8 +4,8 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 const Helpers = use("Helpers");
-const pdf = require("html-pdf");
 const ejs = require("ejs");
+const puppeteer = require("puppeteer");
 
 const logo =
   "https://i.pinimg.com/originals/b9/8a/ec/b98aecd652d202842fb3e5e48d4eecd1.jpg";
@@ -93,25 +93,28 @@ class PdfController {
       { team: "Italy", titles: 4 },
       { team: "Uruguay", titles: 2 },
     ];
-
-    ejs.renderFile("./resources/views/pdf-model.ejs", { data }, (err, html) => {
-      if (err) {
-        console.log("Error", err);
-      } else {
-        pdf
-          .create(html, config)
-          .toFile("./resources/files/generate.pdf", (err, res) => {
-            if (err) {
-              console.log("Error", err);
-            } else {
-              console.log(res.filename);
-            }
+    ejs.renderFile(
+      "./resources/views/pdf-model.ejs",
+      { data },
+      async (err, html) => {
+        if (err) {
+          console.log("Error", err);
+        } else {
+          const browser = await puppeteer.launch();
+          const page = await browser.newPage();
+          await page.setContent(html);
+          await page.pdf({
+            path: "./resources/files/sample.pdf",
+            format: "A4",
           });
-        // force download
-        // return response.attachment(Helpers.resourcesPath("files/generate.pdf"));
-        return response.download(Helpers.resourcesPath("files/generate.pdf"));
+          await browser.close();
+        }
       }
-    });
+    );
+    // Adonis: force download
+    // return response.attachment(Helpers.resourcesPath("files/generate.pdf"));
+    // Adonis: browser download page
+    return response.download(Helpers.resourcesPath("files/sample.pdf"));
   }
 
   /**
