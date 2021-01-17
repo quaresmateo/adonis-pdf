@@ -107,11 +107,11 @@ class PdfController {
               console.log(res.filename);
             }
           });
+        // force download
+        // return response.attachment(Helpers.resourcesPath("files/generate.pdf"));
+        return response.download(Helpers.resourcesPath("files/generate.pdf"));
       }
     });
-    // force download
-    // return response.attachment(Helpers.resourcesPath("files/generate.pdf"));
-    return response.download(Helpers.resourcesPath("files/generate.pdf"));
   }
 
   /**
